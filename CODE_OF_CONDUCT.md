@@ -37,9 +37,13 @@ wycero：写黑白界面不如不写，还不如输出svg文件，或者直接�
 有 github 账号的可以上传至 github，没有的上传至 qq 群
 
 ## 领养部分  
-K2S: 模拟  
-H2O2: 图  
-wycero: 个体  
-Cog: UI  
+K2S: 模拟
+
+H2O2: 图
+
+wycero: 个体
+
+Cog: UI
+
 
 # 其他慢慢补充
