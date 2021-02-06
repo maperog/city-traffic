@@ -12,7 +12,7 @@ DISCUSSION OF CONDUCT (v)
 
 C/C++ （大家都熟悉）
 
-~~Python?（以快速开发著称）~~
+Python?（以快速开发著称）
 
 ~~JS?（浏览器上跑）~~
 
