@@ -34,8 +34,11 @@ const char j_left = 3; // Turn left
 const char j_forward = 4; // Go straight
 const char j_right = 5; // Turn right
 const char j_walk = 6; // Pedestrian
+const char j_gate = 7; // Cross or down arrow, used in toll gates
+// j_gate probably has no practical use, but keeping it 2**n does seem nice
 
 // Traffic light color
+const char j_black = 0; // Disabled
 const char j_red = 1;
 const char j_green = 2;
 const char j_yellow = 3;
