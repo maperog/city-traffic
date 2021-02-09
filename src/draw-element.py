@@ -5,18 +5,28 @@
 from tkinter import *
 
 # Constants
+SCREEN_SIZE = 600
 VERTEX_RADIUS = 30
 EDGE_THICKNESS = 2
-VERTEX_COLOR = (150, 150, 150)
+VERTEX_COLOR = "#969696"
 EDGE_COLOR = (100, 100, 100)
 TEXT_COLOR = (0, 0, 0)
+TEXT_FONT = "Arial 18"
 
-# I have not decided on how to store a graph yet, this is just a placeholder
 graph = []
+
+tk = Tk()
+tk.title("city-traffic")
+tk.geometry(str(SCREEN_SIZE) + "x" + str(SCREEN_SIZE))
+canvas = Canvas(tk, height=600, width=600)
+
 
 # Basic Concepts. Cars are not considered yet
 def draw_vertex(x, y, index):
-    pass
+    vertex_index = canvas.create_oval(x-VERTEX_RADIUS, y-VERTEX_RADIUS,
+                                      x+VERTEX_RADIUS, y+VERTEX_RADIUS,
+                                      width=3, fill=VERTEX_COLOR)
+    canvas.create_text(x, y, text=str(index), font=TEXT_FONT)
 
 def connect_vertices(vertex1, vertex2, length):
     pass
@@ -29,3 +39,8 @@ def input_graph():
 
 def draw_graph():
     pass
+
+draw_vertex(300, 300, 16)
+while True:
+    canvas.pack()
+    tk.update()
