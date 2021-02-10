@@ -64,21 +64,25 @@ struct JLightStatus{ // Traffic light status
 class Junction{ // Base Junction, TODO
 protected:
     int n; // Number of pins/ports
-    std::vector<std::queue<JDemand> > pins, ports; // Queues of pin/port
+    std::vector<std::deque<JDemand> > pins, ports; // Queues of pin/port
     std::vector<std::map<char, JLightStatus> > lights; // Lights (Assuming that for each pin all lights are of distinct types)
 
-    // Get the new state of a traffic light after time t
-    JLightStatus light_addtime(JLightStatus x, int t);
     virtual int get_critical(int maxt); // Get the critical time to interrupt simulation, usually when the countdown is over, within timespan maxt.
     virtual void setup_tl(); //set up traffic lights
 
     // Check whether the vehicles would run into each other in the current configuration
     // and set up safety overrides to avoid collision.
     virtual void safety_check(); 
+    virtual void on_switch(); // Called when a light changes color (NOTE: Called multiple times when multiple lights change color at the same time)
+    virtual char get_next_color(char c);
+    virtual void pass_vehicles(int t); // Let the vehicles pass the junction according to the traffic lights, guaranteed that t<=critical time
 public:
-    void toggle_light(int t); // Toggle the light after t of countdown (Immediately if t=0)
+    void toggle_light(int p,int type,int t); // Toggle the light after t of countdown (Immediately if t=0)
+    void get_light_color(int p,int type);
     void addtime(int t); // Shift the Junction by time t
     void setup(int n); //Set up pins and ports and traffic lights
+    void push_vehicle(Vehicle*v,int target);
+    Vehicle*pop_vehicle(int port);
     Junction():n(0),pins(),ports(),lights(){}
     Junction(int n):n(n),pins(),ports(),lights(){
         setup(n);
