@@ -20,8 +20,9 @@
 #include <string>
 #include <vector>
 #include <queue>
+#include <map>
 
-#include "vehicle.h" 
+#include "vehicle.h"
 
 #ifndef ROAD_H_INCLUDED
 #define ROAD_H_INCLUDED
@@ -52,7 +53,7 @@ struct JDemand{ // A vehicle in a junction
 
 struct JLightStatus{ // Traffic light status
     char color; // Color
-    int countdown; // Countdown(in time particle) 
+    int countdown; // Countdown(in time particle)
     // -1 = No countdown
     // Countdown should always be set to non-(-1)
     // s long as it's scheduled to change
@@ -72,14 +73,14 @@ protected:
 
     // Check whether the vehicles would run into each other in the current configuration
     // and set up safety overrides to avoid collision.
-    virtual void safety_check(); 
+    virtual void safety_check();
     virtual void on_switch(); // Called when a light changes color (NOTE: Called multiple times when multiple lights change color at the same time)
     virtual char get_next_color(char c);
     virtual void pass_vehicles(int t); // Let the vehicles pass the junction according to the traffic lights, guaranteed that t<=critical time
 public:
     void toggle_light(int p,int type,int t); // Toggle the light after t of countdown (Immediately if t=0)
     void get_light_color(int p,int type);
-    void addtime(int t); // Shift the Junction by time t
+    void add_time(int t); // Shift the Junction by time t
     void setup(int n); //Set up pins and ports and traffic lights
     void push_vehicle(Vehicle*v,int target);
     Vehicle*pop_vehicle(int port);
@@ -90,5 +91,3 @@ public:
 };
 
 #endif
-
-
