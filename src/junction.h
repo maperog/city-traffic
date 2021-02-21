@@ -24,8 +24,8 @@
 
 #include "vehicle.h"
 
-#ifndef ROAD_H_INCLUDED
-#define ROAD_H_INCLUDED
+#ifndef JUNCTION_H_INCLUDED
+#define JUNCTION_H_INCLUDED
 
 const int j_tpps = 100; // Time particles per second // 这就是各自为政的代价
 const int j_pass_rate = j_tpps; // j_pass_rate / motor_power = Time for a vehicle to pass the junction

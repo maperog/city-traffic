@@ -22,7 +22,7 @@ void Junction::add_time(int t){
     while(t>0){
         int ct=get_critical(t);
         int mt=(t>ct?ct:t);
-	    pass_car(mt);
+	    this->pass_vehicles(mt);
 	    for(int i=0;i<this->n;i++){
             for(
               std::map<char, JLightStatus>::iterator j=lights[i].begin();
@@ -41,7 +41,7 @@ void Junction::add_time(int t){
     }
 }
 void Junction::toggle_light(int p,int type,int t){
-    if(t){this.lights[p][type].countdown=t;}
+    if(t){this->lights[p][type].countdown=t;}
     else{
         this->lights[p][type].color=get_next_color(this->lights[p][type].color);
         this->lights[p][type].countdown=-1;
