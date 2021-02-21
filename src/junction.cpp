@@ -32,6 +32,8 @@ void Junction::add_time(int t){
 		    j->second.countdown-=mt;
 		if(j->second.countdown==0){
                     this->toggle_light(i,j->first,0);
+		    on_switch();
+		    safety_check();
 		}
 	    }
 	}
@@ -39,7 +41,7 @@ void Junction::add_time(int t){
     }
 }
 void Junction::toggle_light(int p,int type,int t){
-    if(t){}
+    if(t){this.lights[p][type].countdown=t;}
     else{
         this->lights[p][type].color=get_next_color(this->lights[p][type].color);
 	this->lights[p][type].countdown=-1;
