@@ -16,6 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>
  */
 
+#include <cassert>
 #include <utility>
 #include <string>
 #include <vector>
@@ -49,6 +50,8 @@ const char j_yellow = 3; // (Unused)
 struct JDemand{ // A vehicle in a junction
     Vehicle*v;
     int port;
+    JDemand():v(),port(){}
+    JDemand(Vehicle*v,int port):v(v),port(port){}
 };
 
 struct JLightStatus{ // Traffic light status
@@ -60,6 +63,8 @@ struct JLightStatus{ // Traffic light status
     // No matter if the countdown is displayed
 
     bool safety; // safety override, enforcing red light.
+    JLightStatus():color(),countdown(),safety(){}
+    JLightStatus(char color,int countdown):color(color),countdown(countdown),safety(){}
 };
 
 class Junction{ // Base Junction, TODO
@@ -80,7 +85,7 @@ protected:
     void pass_vehicles(int t); // Let the vehicles pass the junction according to the traffic lights, guaranteed that t<=critical time
 public:
     void toggle_light(int p,int type,int t); // Toggle the light after t of countdown (Immediately if t=0)
-    void get_light_color(int p,int type);
+    char get_light_color(int p,int type);
     void add_time(int t); // Shift the Junction by time t
     void setup(int n); //Set up pins and ports and traffic lights
 
@@ -88,6 +93,7 @@ public:
     // target: the port where the vehicle should come out
     void push_vehicle(Vehicle*v,int pin,int target);
 
+    // Pop vehicle from the port
     Vehicle*pop_vehicle(int port);
     Junction():n(0),pins(),ports(),lights(){}
     Junction(int n):n(n),pins(),ports(),lights(){
@@ -95,4 +101,12 @@ public:
     }
 };
 
+// SimpleJunction in which there's only one light for each pin
+// one for all ports! with an exception of right turn
+class SimpleJunction:Junction{
+protected:
+    void setup_tl();
+    bool acceptp(int s, int t);
+    void on_switch();
+};
 #endif
