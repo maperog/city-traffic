@@ -47,3 +47,12 @@ void Junction::toggle_light(int p,int type,int t){
         this->lights[p][type].countdown=-1;
     }
 }
+bool Junction::acceptp(int s,int t){
+    // Trivial for base class
+    return true;
+}
+void Junction::pass_vehicles(int t){
+    for(int i=0;i<=this->n;i++){
+        
+    }
+}

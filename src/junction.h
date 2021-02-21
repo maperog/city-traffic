@@ -76,13 +76,18 @@ protected:
     virtual void safety_check();
     virtual void on_switch(); // Called when a light changes color (NOTE: Called multiple times when multiple lights change color at the same time)
     virtual char get_next_color(char c);
-    virtual void pass_vehicles(int t); // Let the vehicles pass the junction according to the traffic lights, guaranteed that t<=critical time
+    virtual bool acceptp(int s, int t); // Whether to accept a vehicle from pin s to port t
+    void pass_vehicles(int t); // Let the vehicles pass the junction according to the traffic lights, guaranteed that t<=critical time
 public:
     void toggle_light(int p,int type,int t); // Toggle the light after t of countdown (Immediately if t=0)
     void get_light_color(int p,int type);
     void add_time(int t); // Shift the Junction by time t
     void setup(int n); //Set up pins and ports and traffic lights
-    void push_vehicle(Vehicle*v,int target);
+
+    // Add a vehicle to the pin
+    // target: the port where the vehicle should come out
+    void push_vehicle(Vehicle*v,int pin,int target);
+
     Vehicle*pop_vehicle(int port);
     Junction():n(0),pins(),ports(),lights(){}
     Junction(int n):n(n),pins(),ports(),lights(){
