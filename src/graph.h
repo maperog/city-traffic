@@ -20,6 +20,9 @@
 
 #ifndef GRAPH_API_H_INCLUDED
 #define GRAPH_API_H_INCLUDED
+
+typedef int VehicleData; // TODO
+
 struct Vertex{ // Add vertex metadata here
     int junction_type;
 };
@@ -57,9 +60,9 @@ const int*c_list_edg(int s){ // List edges by starting point (C-style array) Ter
 // For GUI
 int get_canvas_x();
 int get_canvas_y(); // Canvas size
-std::pair<int,int>recommend_coord(int p); // return recommended coordinate of point p
-long long int c_recommend_coord(int p){
-    std::pair<int,int>r=recommend_coord(p);
+std::pair<int,int>get_coord(int p); // returns coordinates of vertex p
+long long int c_get_coord(int p){
+    std::pair<int,int>r=get_coord(p);
     return (r.first<<32)&r.second;
 }
 #endif
