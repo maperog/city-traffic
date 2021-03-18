@@ -90,7 +90,7 @@ public:
     //returns false if rejected by junction. The vehicle has to stay at the end of the road
     //returns true if accepted
     //Callback is called when vehicle is allowed into edg2
-    bool conduct(Vehicle*v,int edg1,int edg2,ConductCallback cc);
+    bool conduct(Vehicle*v,int edg1,int edg2,ConductCallback*cc);
 
 
     void add_time(int t);
