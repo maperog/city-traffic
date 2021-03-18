@@ -18,13 +18,17 @@
 #include<vector>
 #include<utility>
 
+#include"vehicle.h"
+
 #ifndef GRAPH_API_H_INCLUDED
 #define GRAPH_API_H_INCLUDED
 
-typedef int VehicleData; // TODO
+typedef int VehicleList; // TODO
 
 struct Vertex{ // Add vertex metadata here
     int junction_type;
+    int x;
+    int y;
 };
 struct EdgeMeta{ // Add edge data here
     int s; // Starting Point
@@ -39,8 +43,10 @@ struct EdgeMeta{ // Add edge data here
     // first (Use std::stable_sort)
 
     int ord2; // The order of the edge on the vertex t
-
-    int _next; // Next Edge(internal)
+};
+struct ConductCallback{
+    //Functor, Called when Vehicle v is to be placed on the start of edgid
+    virtual int operator()(Vehicle*v,int edgid);
 };
 bool edge_cmp1(Edge x,Edge y){return x.ord1<y.ord1;}
 bool edge_cmp2(Edge x,Edge y){return x.ord2<y.ord2;}
@@ -51,9 +57,11 @@ private:
     std::Vector<std::vector<EdgeMeta> >e;
 public:
     int n,m;
-    int add_edg(Edge mt); //add undirected edge between s and t with edge metadata mt, returns edge id
+    int add_edg(Edge mt); //add undirected edge between s and t with edge metadata mt, returns edge id, the id of the reverse edge is id+1
+    void set_vertex(int p,Vertex data);//set vertex data
+    void finish_edg(); //Inform the Graph that the edges are completely added
     //int fix_id(int id); //get the canonical edge id
-    Edge get_edg_by_id(int id); // Get edge data by ID
+    EdgeMeta get_edg_by_id(int id); // Get edge data by ID
     const std::vector<int>&list_edg(int s); // List edges by starting point
     const int*c_list_edg(int s){ // List edges by starting point (C-style array) Terminating with -1
         std::vector<int> v=list_edg(s);
@@ -62,10 +70,11 @@ public:
         arr[v.size()]=-1;
         return arr;
     }
+    int get_path(int s,int t);// Get the first edge of the shortest path from s to t
 
     //Constructors(n=Vertices# m=Edges#)
-    Graph():n(),m(){/*FUCK*/}
-    Graph(int n,int m);
+    Graph():n(){/*FUCK*/}
+    Graph(int n);
 
     // For GUI
     int get_canvas_x();
@@ -75,5 +84,15 @@ public:
         std::pair<int,int>r=get_coord(p);
         return (r.first<<32)&r.second;
     }
+
+    //Conduct
+    //To be called when the vehicle goes into the junction
+    //returns false if rejected by junction. The vehicle has to stay at the end of the road
+    //returns true if accepted
+    //Callback is called when vehicle is allowed into edg2
+    bool conduct(Vehicle*v,int edg1,int edg2,ConductCallback cc);
+
+
+    void add_time(int t);
 };
 #endif
