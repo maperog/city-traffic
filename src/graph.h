@@ -27,6 +27,7 @@ typedef int VehicleList; // TODO
 
 struct Vertex{ // Add vertex metadata here
     int junction_type;
+	int junction_offset;
     int x;
     int y;
 };
@@ -57,6 +58,8 @@ private:
     std::vector<Vertex>v;
     std::vector<Edge>e;
     std::vector<std::vector<int> >eindex;
+    std::vector<std::vector<int> >floyd_dist;
+    std::vector<std::vector<int> >floyd_next;
 public:
     int n,m;
     int add_edg(Edge mt); //add undirected edge between s and t with edge metadata mt, returns edge id
@@ -80,8 +83,8 @@ public:
     Graph(int n);
 
     // For GUI
-    int get_canvas_x();
-    int get_canvas_y(); // Canvas size
+    //int get_canvas_x(); // WHAT?
+    //int get_canvas_y(); // Canvas size
     std::pair<int,int>get_coord(int p); // returns coordinates of vertex p
     long long int c_get_coord(int p){
         std::pair<int,int>r=get_coord(p);
