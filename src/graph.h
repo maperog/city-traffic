@@ -43,10 +43,11 @@ struct EdgeMeta{ // Add edge data here
     // first (Use std::stable_sort)
 
     int ord2; // The order of the edge on the vertex t
+    int rev; //Reverse Edge
 };
 struct ConductCallback{
-    //Functor, Called when Vehicle v is to be placed on the start of edgid
-    virtual int operator()(Vehicle*v,int edgid);
+    //Called when Vehicle v is to be placed on the start of edgid
+    virtual void work(Vehicle*v,int edgid);
 };
 bool edge_cmp1(Edge x,Edge y){return x.ord1<y.ord1;}
 bool edge_cmp2(Edge x,Edge y){return x.ord2<y.ord2;}
@@ -54,11 +55,13 @@ bool edge_cmp2(Edge x,Edge y){return x.ord2<y.ord2;}
 class Graph{
 private:
     std::vector<Vertex>v;
-    std::Vector<std::vector<EdgeMeta> >e;
+    std::vector<Edge>e;
+    std::vector<std::vector<int> >eindex;
 public:
     int n,m;
-    int add_edg(Edge mt); //add undirected edge between s and t with edge metadata mt, returns edge id, the id of the reverse edge is id+1
+    int add_edg(Edge mt); //add undirected edge between s and t with edge metadata mt, returns edge id
     void set_vertex(int p,Vertex data);//set vertex data
+    //Note that Vertex id starts from 0
     void finish_edg(); //Inform the Graph that the edges are completely added
     //int fix_id(int id); //get the canonical edge id
     EdgeMeta get_edg_by_id(int id); // Get edge data by ID
