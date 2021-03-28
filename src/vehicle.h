@@ -18,9 +18,4 @@
 
 #ifndef VEHICLE_H_INCLUDED
 #define VEHICLE_H_INCLUDED
-struct Vehicle{
-    // More fields to be added, TODO
-    int motor_power; // Determines speed
-    int skill_power; // The ability to skip other vehicles
-};
 #endif
