@@ -30,12 +30,13 @@ struct Vertex{ // Add vertex metadata here
 	int junction_offset;
     int x;
     int y;
+    int id;
 };
-struct EdgeMeta{ // Add edge data here
+struct Edge{ // Add edge data here
     int s; // Starting Point
     int t; // Finishing point
-    int len; //length
-    int quality; // a factor determining vehicle speed
+    double len; //length
+    double quality; // a factor determining vehicle speed
     int ord1; // The order of the edge on the vertex s
     // Since the junction requires the pins and ports to
     // be given in the correct order, the backend should
@@ -57,17 +58,22 @@ class Graph{
 private:
     std::vector<Vertex>v;
     std::vector<Edge>e;
-    std::vector<std::vector<int> >eindex;
-    std::vector<std::vector<int> >floyd_dist;
-    std::vector<std::vector<int> >floyd_next;
+    std::vector<int> edgelist[1005];
 public:
     int n,m;
-    int add_edg(Edge mt); //add undirected edge between s and t with edge metadata mt, returns edge id
+    int add_edg(Edge mt) //add directed edge between s and t with edge metadata mt, returns edge id
+    {
+    	e.push_back(mt);
+    	edgelist[mt.s].push_back(e.size()-1);
+	}
     void set_vertex(int p,Vertex data);//set vertex data
     //Note that Vertex id starts from 0
     void finish_edg(); //Inform the Graph that the edges are completely added
     //int fix_id(int id); //get the canonical edge id
-    EdgeMeta get_edg_by_id(int id); // Get edge data by ID
+    Edge get_edg_by_id(int id) // Get edge data by ID
+    {
+    	return e[id];
+	}
     const std::vector<int>&list_edg(int s); // List edges by starting point
     const int*c_list_edg(int s){ // List edges by starting point (C-style array) Terminating with -1
         std::vector<int> v=list_edg(s);
@@ -85,10 +91,16 @@ public:
     // For GUI
     //int get_canvas_x(); // WHAT?
     //int get_canvas_y(); // Canvas size
-    std::pair<int,int>get_coord(int p); // returns coordinates of vertex p
+    std::pair<int,int>get_coord(int p) // returns coordinates of vertex p
+    {
+    	std::pair<int,int> res;
+    	res.first = v[p].x;
+    	res.second = v[p].y;
+    	return res;
+	}
     long long int c_get_coord(int p){
-        std::pair<int,int>r=get_coord(p);
-        return (r.first<<32)&r.second;
+        std::pair<int,int>r=get_coord(p-1);
+        return ((long long)r.first<<32)&r.second;
     }
 
     //Conduct

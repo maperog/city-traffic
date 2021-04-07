@@ -23,5 +23,9 @@ struct Vehicle{
     int motor_power; // Determines speed
     int skill_power; // The ability to skip other vehicles
     int obstruct_power;
-}
+    int start_time;
+    int start_point;
+    int end_point;
+    int current_point;
+};
 #endif
