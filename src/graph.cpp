@@ -1,4 +1,5 @@
 #include"graph.h"
+#if false
 Graph::Graph(int n){
     for(int i=0;i<n;i++)v.push_back(Vertex());
     for(int i=0;i<n;i++)eindex.push_back(std::vector<int>());
@@ -52,3 +53,4 @@ int Graph::get_path(int s,int t){
 std::pair<int,int>Graph::get_coord(int p){
 	return std::make_pair(v[p].x,v[p].y);
 }
+#endif
