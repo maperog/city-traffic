@@ -4,7 +4,7 @@ City Traffic Emulator
 
 # Copyright
 
-Copyright 2021 "Maperog"(Zheng Yitao, Ma Yuanche, Huang Shengyan, Wang Yichong) and contributors.
+Copyright 2021 "Maperog"(Zheng Yitao, Ma Yuanche, Huang Shengyan, Wang Yichong, Lei Zhehan) and contributors.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
